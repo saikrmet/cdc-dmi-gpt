@@ -1,5 +1,5 @@
 ---
-name: ChatGPT + Enterprise data
+name: ChatGPT + CDC DMI data
 description: Chat with your data using OpenAI and AI Search.
 languages:
 - python
@@ -15,12 +15,8 @@ page_type: sample
 urlFragment: azure-search-openai-demo
 ---
 
-# ChatGPT + Enterprise data with Azure OpenAI and AI Search
+# ChatGPT + CDC DMI data with Azure OpenAI and AI Search
 
-> [!IMPORTANT]
-> As of November 15, 2023, Azure Cognitive Search has been renamed to Azure AI Search.
-
-### Announcing [**JavaScript**](https://aka.ms/azai/js/code), [**.NET**](https://aka.ms/azai/net/code), and [**Java**](https://aka.ms/azai/java/code) samples based on this one in [**Python**](https://aka.ms/azai/py/code). Learn more at  https://aka.ms/azai.
 
 ## Table of Contents
 
@@ -50,12 +46,13 @@ urlFragment: azure-search-openai-demo
   - [Troubleshooting](#troubleshooting)
   - [Getting help](#getting-help)
 
-[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=599293758&machine=standardLinux32gb&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=WestUs2)
-[![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/azure-search-openai-demo)
+[![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/saikrmet/cdc-dmi-gpt)
 
-This sample demonstrates a few approaches for creating ChatGPT-like experiences over your own data using the Retrieval Augmented Generation pattern. It uses Azure OpenAI Service to access the ChatGPT model (gpt-35-turbo), and Azure AI Search for data indexing and retrieval.
+This application is used to help inform US citizens about CDC's Data Modernization Initiative (DMI) and its efforts. 
 
-The repo includes sample data so it's ready to try end to end. In this sample application we use a fictitious company called Contoso Electronics, and the experience allows its employees to ask questions about the benefits, internal policies, as well as job descriptions and roles.
+This application demonstrates a few approaches for creating ChatGPT-like experiences over your own data using the Retrieval Augmented Generation pattern. It uses Azure OpenAI Service to access the ChatGPT model (gpt-35-turbo), and Azure AI Search for data indexing and retrieval.
+
+
 
 ![RAG Architecture](docs/appcomponents.png)
 
@@ -73,7 +70,7 @@ The repo includes sample data so it's ready to try end to end. In this sample ap
 
 ## Azure account requirements
 
-**IMPORTANT:** In order to deploy and run this example, you'll need:
+**IMPORTANT:** In order to deploy and run this application on your own, you'll need:
 
 * **Azure account**. If you're new to Azure, [get an Azure account for free](https://azure.microsoft.com/free/cognitive-search/) and you'll get some free Azure credits to get started.
 * **Azure subscription with access enabled for the Azure OpenAI service**. You can request access with [this form](https://aka.ms/oaiapply). If your access request to Azure OpenAI service doesn't match the [acceptance criteria](https://learn.microsoft.com/legal/cognitive-services/openai/limited-access?context=%2Fazure%2Fcognitive-services%2Fopenai%2Fcontext%2Fcontext), you can use [OpenAI public API](https://platform.openai.com/docs/api-reference/introduction) instead. Learn [how to switch to an OpenAI instance](#openaicom-openai).
@@ -103,14 +100,8 @@ either by deleting the resource group in the Portal or running `azd down`.
 ### Project setup
 
 You have a few options for setting up this project.
-The easiest way to get started is GitHub Codespaces, since it will setup all the tools for you,
-but you can also [set it up locally](#local-environment) if desired.
-
-#### GitHub Codespaces
-
-You can run this repo virtually by using GitHub Codespaces, which will open a web-based VS Code in your browser:
-
-[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=599293758&machine=standardLinux32gb&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=WestUs2)
+You can use Dev Containers to run the image for this repo or 
+you can also [set it up locally](#local-environment) if desired.
 
 #### VS Code Dev Containers
 
@@ -118,7 +109,7 @@ A related option is VS Code Dev Containers, which will open the project in your 
 
 1. Start Docker Desktop (install it if not already installed)
 1. Open the project:
-    [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/azure-search-openai-demo)
+    [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/saikrmet/cdc-dmi-gpt)
 1. In the VS Code window that opens, once the project files show up (this may take several minutes), open a terminal window
 1. Run `azd auth login`
 1. Now you can follow the instructions in [Deploying from scratch](#deploying-from-scratch) below
@@ -140,7 +131,7 @@ Then bring down the project code:
 
 1. Create a new folder and switch to it in the terminal
 1. Run `azd auth login`
-1. Run `azd init -t azure-search-openai-demo`
+1. Run `azd init -t cdc-dmi-gpt`
     * note that this command will initialize a git repository and you do not need to clone this repository
 
 ### Deploying from scratch
@@ -435,15 +426,3 @@ Here are the most common failure scenarios and solutions:
 1. You see `CERTIFICATE_VERIFY_FAILED` when the `prepdocs.py` script runs. That's typically due to incorrect SSL certificates setup on your machine. Try the suggestions in this [StackOverflow answer](https://stackoverflow.com/questions/35569042/ssl-certificate-verify-failed-with-python3/43855394#43855394).
 
 1. After running `azd up` and visiting the website, you see a '404 Not Found' in the browser. Wait 10 minutes and try again, as it might be still starting up. Then try running `azd deploy` and wait again. If you still encounter errors with the deployed app, consult these [tips for debugging App Service app deployments](http://blog.pamelafox.org/2023/06/tips-for-debugging-flask-deployments-to.html) or watch [this video about downloading App Service logs](https://www.youtube.com/watch?v=f0-aYuvws54). Please file an issue if the logs don't help you resolve the error.
-
-### Getting help
-
-This is a sample built to demonstrate the capabilities of modern Generative AI apps and how they can be built in Azure.
-For help with deploying this sample, please post in [GitHub Issues](/issues). If you're a Microsoft employee, you can also post in [our Teams channel](https://aka.ms/azai-python-help).
-
-This repository is supported by the maintainers, _not_ by Microsoft Support,
-so please use the support mechanisms described above, and we will do our best to help you out.
-
-### Note
-
->Note: The PDF documents used in this demo contain information generated using a language model (Azure OpenAI Service). The information contained in these documents is only for demonstration purposes and does not reflect the opinions or beliefs of Microsoft. Microsoft makes no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability or availability with respect to the information contained in this document. All rights reserved to Microsoft.

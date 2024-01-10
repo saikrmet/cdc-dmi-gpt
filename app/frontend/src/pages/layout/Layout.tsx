@@ -14,7 +14,7 @@ const Layout = () => {
             <header className={styles.header} role={"banner"}>
                 <div className={styles.headerContainer}>
                     <Link to="/" className={styles.headerTitleContainer}>
-                        <h3 className={styles.headerTitle}>GPT + Enterprise data | Sample</h3>
+                        <h3 className={styles.headerTitle}>CDC DMI GPT</h3>
                     </Link>
                     <nav>
                         <ul className={styles.headerNavList}>
@@ -29,7 +29,7 @@ const Layout = () => {
                                 </NavLink>
                             </li>
                             <li className={styles.headerNavLeftMargin}>
-                                <a href="https://aka.ms/entgptsearch" target={"_blank"} title="Github repository link">
+                                <a href="https://github.com/saikrmet/cdc-dmi-gpt" target={"_blank"} title="Github repository link">
                                     <img
                                         src={github}
                                         alt="Github logo"
